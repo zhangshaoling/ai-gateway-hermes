@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+*.so
+
+# Virtual environment
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.production
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Config overrides
+config.local.yaml
+config.local.yml
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# Docker
+.docker/
+
+# Prometheus data (if running locally)
+prometheus_data/
