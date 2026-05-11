@@ -1,22 +1,22 @@
 # AI Gateway Hermes
 
-基于QClaw AI工程师工具构建的高性能AI服务网关，为小米元宝AI活动提供稳定、可扩展的AI服务接入能力。
+基于多API密钥自动负载均衡与容灾设计的高性能AI服务网关，提供稳定、可扩展的AI服务接入能力。
 
 ## 项目概述
 
-AI Gateway Hermes 是一个专为AI服务设计的网关系统，集成了QClaw AI工程师工具的核心功能，包括LCM数据库管理、Agent会话管理、智能路由等特性。该网关为小米元宝AI活动提供统一的AI服务入口，实现服务的负载均衡、API密钥管理、流量控制等核心功能。
+AI Gateway Hermes 是一个专为AI服务设计的网关系统，核心功能覆盖API密钥管理、智能路由、负载均衡、流量控制等，为AI服务提供统一的接入入口。
 
 ## 核心特性
 
-### 🔧 QClaw工具集成
+### 🔧 核心能力
 
-#### LCM数据库管理
-- **智能缓存策略**：基于QClaw的LCM（Least Recently Used with Consideration）算法，实现智能缓存淘汰
+#### 缓存管理
+- **智能缓存策略**：基于LRU（Least Recently Used）算法，实现智能缓存淘汰
 - **热点数据识别**：自动识别高频访问的AI模型和API响应，优化缓存命中率
 - **分布式缓存同步**：支持多节点间的缓存数据一致性保证
 
 #### Agent会话管理
-- **会话持久化**：基于QClaw的Agent会话管理，实现跨请求的上下文保持
+- **会话持久化**：跨请求的上下文保持
 - **会话恢复**：支持会话中断后的自动恢复，确保用户体验连续性
 - **多Agent协作**：支持多个AI Agent之间的协同工作，处理复杂任务
 
@@ -68,10 +68,10 @@ class APIKeyManager:
 
 ### ⚖️ 负载均衡策略
 
-#### 基于QClaw使用模式的智能负载均衡
+#### 基于多维度指标的智能负载均衡
 ```python
-# 示例：基于QClaw使用模式的负载均衡算法
-class QClawLoadBalancer:
+# 示例：多维度负载均衡算法
+class LoadBalancer:
     def __init__(self):
         self.server_weights = {}
         self.response_times = {}
@@ -85,12 +85,8 @@ class QClawLoadBalancer:
         error_rate = self.error_rates.get(server_id, 0)
         error_factor = 1 - min(error_rate, 0.9)
         
-        # 基于QClaw Agent会话负载
-        session_load = self.get_session_load(server_id)
-        session_factor = 1 / (session_load + 0.1)
-        
         # 综合权重计算
-        weight = response_time_factor * error_factor * session_factor
+        weight = response_time_factor * error_factor
         self.server_weights[server_id] = weight
         
         return weight
@@ -99,7 +95,7 @@ class QClawLoadBalancer:
 #### 多维度负载指标
 - **响应时间**：实时监控各节点的平均响应时间
 - **错误率**：统计各节点的错误请求比例
-- **会话负载**：基于QClaw Agent会话数量评估节点负载
+- **会话负载**：基于活跃会话数量评估节点负载
 - **资源利用率**：监控CPU、内存、GPU等资源使用情况
 
 #### 动态调整策略
@@ -120,12 +116,12 @@ class QClawLoadBalancer:
 │  └─ Authentication                                          │
 ├─────────────────────────────────────────────────────────────┤
 │  Load Balancer Layer                                        │
-│  ├─ QClaw-Based LB Algorithm                                │
+│  ├─ Multi-Metric LB Algorithm                                │
 │  ├─ Health Check                                            │
 │  └─ Fault Tolerance                                         │
 ├─────────────────────────────────────────────────────────────┤
-│  QClaw Integration Layer                                    │
-│  ├─ LCM Cache Manager                                       │
+│  Gateway Core Layer                                    │
+│  ├─ Cache Manager                                       │
 │  ├─ Agent Session Manager                                   │
 │  └─ Service Discovery                                       │
 ├─────────────────────────────────────────────────────────────┤
@@ -157,10 +153,10 @@ class QClawLoadBalancer:
 
 - 🚀 **高并发**: 支持多Key并发请求，大幅提升处理效率
 - 🛡️ **容灾能力**: 自动故障检测和切换，确保任务连续性
-- 📊 **智能调度**: 基于QClaw使用模式的负载均衡算法
+- 📊 **智能调度**: 基于多维度指标的负载均衡算法
 - 🔔 **实时告警**: 配额不足时自动通知，及时补充资源
 - 🔄 **自动重试**: 智能重试机制，提高成功率
-- 🧠 **AI原生**: 深度集成QClaw AI工程师工具，提供原生AI体验
+- 🧠 **AI原生**: 专为AI工作负载设计，开箱即用
 
 ## 适用场景
 
@@ -176,4 +172,4 @@ MIT License
 
 ---
 
-*本项目展示了一个完整的AI驱动的自动化工作流，深度集成QClaw AI工程师工具，通过智能调度和容灾机制解决了大规模AI任务中的配额限制问题。*
+*本项目展示了一个完整的AI网关系统，通过智能调度和容灾机制解决大规模AI任务中的配额限制与负载均衡问题。*
